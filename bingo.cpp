@@ -8,16 +8,23 @@
 #include <random>
 #include <algorithm>
 #include <vector>
-
-int nums[75];
 		
 Bingo::Bingo()
 {
-	for (int i = 0; i < 75; ++i)
+	nums.reserve(75);
+	for(int i = 1; i <= 75; ++i)
 	{
-		nums[i] = i+1;
+
+		nums.push_back(i);
 	}
- 
+	std::random_device rd;
+	std::mt19937 g(rd());
+
+	std::shuffle(this->nums.begin(), this->nums.begin() + 15, g);
+	/*for(int j = 0; j < 25; ++j)//este ciclo es para saber que aleatoriza bien
+	{
+		std::cout << this->nums[j] << std::endl;
+	}*/
 }
 
 int Bingo::generate(int argc, char* argv[])
@@ -86,7 +93,6 @@ const char* Bingo::generate_filename(std::string source)
 	{
 		target = source.substr(0, dot_pos) + "-1000" + source.substr(dot_pos);
 	}
-	std::cout << target << std::endl;
 	return target.c_str();
 }
 
