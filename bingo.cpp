@@ -109,6 +109,9 @@ int main(int argc, char* argv[])
 		{
 			std::cout << "Create Bingo cards and simulate game sessions. Usage:" << std::endl;
 			std::cout << "bingo action [options]" << std::endl;
+			std::cout << std::endl;
+			std::cout << "bingo generate NUMBER card.svg [-s symbols.txt]" << std::endl;
+			std::cout << "bingo simulate [card.idx] [-t type] [-s symbols.txt]" << std::endl;
 			return 0;	
 		}
 	}
