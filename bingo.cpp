@@ -8,19 +8,23 @@
 #include <random>
 #include <algorithm>
 #include <vector>
-
-int nums[75];
 		
 Bingo::Bingo()
 {
-	for (int i = 0; i < 75; ++i)
+	nums.reserve(75);
+	for(int i = 1; i <= 75; ++i)
 	{
-		nums[i] = i+1;
-		std::cout << nums[i] << std::endl;
+		nums.push_back(i);
 	}
- 
-}
+	std::random_device rd;
+	std::mt19937 g(rd());
 
+	std::shuffle(this->nums.begin(), this->nums.begin() + 15, g);
+	for(int j = 0; j < 25; ++j)//este ciclo es para saber que aleatoriza bien
+	{
+		std::cout << this->nums[j] << std::endl;
+	}
+}
 int Bingo::generate(int argc, char* argv[])
 {
 	size_t number = atoi(argv[2]);
