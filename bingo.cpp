@@ -8,6 +8,7 @@
 #include <random>
 #include <algorithm>
 #include <vector>
+#include <chrono>
 		
 Bingo::Bingo()
 {
@@ -18,16 +19,12 @@ Bingo::Bingo()
 		nums.push_back(i);
 	}
 	std::random_device rd;
-	std::mt19937 g(rd());
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 	
 	for (int i = 0; i < 75; i+=15 )
 	{
-		std::shuffle(this->nums.begin()+i, this->nums.begin() + (i + 15), g);
+		std::shuffle(this->nums.begin()+i, this->nums.begin() + (i + 15), std::default_random_engine(seed));
 	}
-	/*for(int j = 0; j < 25; ++j)//este ciclo es para saber que aleatoriza bien
-	{
-		std::cout << this->nums[j] << std::endl;
-	}*/
 }
 
 int Bingo::generate(int argc, char* argv[])
