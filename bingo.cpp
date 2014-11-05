@@ -19,8 +19,11 @@ Bingo::Bingo()
 	}
 	std::random_device rd;
 	std::mt19937 g(rd());
-
-	std::shuffle(this->nums.begin(), this->nums.begin() + 15, g);
+	
+	for (int i = 0; i < 75; i+=15 )
+	{
+		std::shuffle(this->nums.begin()+i, this->nums.begin() + (i + 15), g);
+	}
 	/*for(int j = 0; j < 25; ++j)//este ciclo es para saber que aleatoriza bien
 	{
 		std::cout << this->nums[j] << std::endl;
