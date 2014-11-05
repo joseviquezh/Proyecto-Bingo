@@ -42,7 +42,7 @@ int Bingo::generate(int argc, char* argv[])
 	std::string line;
 	for ( size_t i = 0; i < number; ++i){
 		std::ofstream myfile;
-		myfile.open ("example.txt", std::ios::out);		
+		myfile.open (generate_filename(filename), std::ios::out);		
 		while ( std::getline(svg_file, line) ){
 		
 			size_t pos = line.rfind('$');
@@ -76,6 +76,18 @@ std::string Bingo::get_number(int count)
 	itoa ( nums[count], temp, 10);
 	std::string number = temp;
 	return number;
+}
+
+const char* Bingo::generate_filename(std::string source)
+{
+	std::string target;
+	size_t dot_pos = source.rfind('.');
+	if ( dot_pos != std::string::npos )
+	{
+		target = source.substr(0, dot_pos) + "-1000" + source.substr(dot_pos);
+	}
+	std::cout << target << std::endl;
+	return target.c_str();
 }
 
 int Bingo::simulate(int argc, char* argv[])
