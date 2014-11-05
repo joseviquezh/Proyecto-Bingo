@@ -16,7 +16,6 @@ Bingo::Bingo()
 	for (int i = 0; i < 75; ++i)
 	{
 		nums[i] = i+1;
-		std::cout << nums[i] << std::endl;
 	}
  
 }
@@ -25,11 +24,11 @@ int Bingo::generate(int argc, char* argv[])
 {
 	size_t number = atoi(argv[2]);
 	std::string filename = argv[3];
-	/*std::string symbols_filename;
+	std::string symbols_filename;
 	if (argc > 4 && strcmp(argv[4], "-s") == 0)
 	{
 		symbols_filename,argv[5];
-	}*/
+	}
 	
 	std::ifstream svg_file( filename );
 	if ( ! svg_file )
@@ -38,11 +37,12 @@ int Bingo::generate(int argc, char* argv[])
 		return 1;
 	}
 	
-	int count=1;
+	int count=0;
 	int vec_pos=1;
 	std::string line;
 	for ( size_t i = 0; i < number; ++i){
-		
+		std::ofstream myfile;
+		myfile.open ("example.txt", std::ios::out);		
 		while ( std::getline(svg_file, line) ){
 		
 			size_t pos = line.rfind('$');
@@ -50,20 +50,21 @@ int Bingo::generate(int argc, char* argv[])
 			if ( pos != std::string::npos && finalpos != std::string::npos )
 			{
 				line.replace(pos, ( (finalpos - pos) + 1 ),get_number(vec_pos+count));
+				++count;
 			}
 			
 			if (count == 5)
 			{
 				vec_pos+=15;
-				count = 1;
+				count = 0;
 			}
 			
-			std::cout << line << std::endl;
-			++count;
+			myfile << line << '\n';
 		}
 		std::cout << std::endl;
 		svg_file.clear();
 		svg_file.seekg(0, std::ios_base::beg);
+		myfile.close();
 	}
 	
 	return 0;
@@ -102,10 +103,6 @@ int main(int argc, char* argv[])
 			return 0;	
 		}
 	}
-	/*std::string line = "111111111111111";
-	std::string str = "22222";
-	line.replace(5,5,str);
-	std::cout << line << std::endl;*/
 	
 	Bingo bingo;
 	
