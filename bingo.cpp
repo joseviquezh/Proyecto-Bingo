@@ -34,7 +34,7 @@ int Bingo::generate(int argc, char* argv[])
 	std::string symbols_filename;
 	if (argc > 4 && strcmp(argv[4], "-s") == 0)
 	{
-		symbols_filename,argv[5];
+		symbols_filename = argv[5];
 	}
 	
 	std::ifstream svg_file( filename );
@@ -47,9 +47,9 @@ int Bingo::generate(int argc, char* argv[])
 	int count=0;
 	int vec_pos=1;
 	std::string line;
-	for ( size_t i = 0; i < number; ++i){
+	for ( size_t i = 1; i <= number; ++i){
 		std::ofstream myfile;
-		myfile.open (generate_filename(filename), std::ios::out);		
+		myfile.open (generate_filename(filename, i, number), std::ios::out);		
 		while ( std::getline(svg_file, line) ){
 		
 			size_t pos = line.rfind('$');
@@ -68,7 +68,6 @@ int Bingo::generate(int argc, char* argv[])
 			
 			myfile << line << '\n';
 		}
-		std::cout << std::endl;
 		svg_file.clear();
 		svg_file.seekg(0, std::ios_base::beg);
 		myfile.close();
@@ -85,13 +84,28 @@ std::string Bingo::get_number(int count)
 	return number;
 }
 
-const char* Bingo::generate_filename(std::string source)
+const char* Bingo::generate_filename(std::string source, int filenumber, int number)
 {
 	std::string target;
 	size_t dot_pos = source.rfind('.');
+	
+	char num_c[number];
+	itoa(filenumber, num_c, 10);	
+	std::string string_number = num_c;
+	int pivot;
+	for (int i = 1; number > i; i*=10)
+	{
+		pivot = i;
+	}
+	for (int i = filenumber; i < pivot; i*=10)
+	{
+		string_number = "0" + string_number;
+	}
+	string_number = "-" + string_number;
+	
 	if ( dot_pos != std::string::npos )
 	{
-		target = source.substr(0, dot_pos) + "-1000" + source.substr(dot_pos);
+		target = source.substr(0, dot_pos) + string_number + source.substr(dot_pos);
 	}
 	return target.c_str();
 }

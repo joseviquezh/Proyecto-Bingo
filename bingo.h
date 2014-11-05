@@ -19,6 +19,6 @@ class Bingo
 	int generate(int argc, char* argv[]);
 	int simulate(int argc, char* argv[]);
 	std::string get_number(int count);
-	const char* generate_filename(std::string source);
+	const char* generate_filename(std::string source,int filenumber, int number);
 };
 
