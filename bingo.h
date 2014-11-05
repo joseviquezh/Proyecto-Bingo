@@ -12,6 +12,7 @@ class Bingo
 	private:
 		const size_t nColumnas = 5;// Hay que cambiar el valor
 		std::vector<int> nums;
+		void random();
 	public:
 		Bingo();
 
@@ -20,5 +21,6 @@ class Bingo
 	int simulate(int argc, char* argv[]);
 	std::string get_number(int count);
 	const char* generate_filename(std::string source,int filenumber, int number);
+	
 };
 

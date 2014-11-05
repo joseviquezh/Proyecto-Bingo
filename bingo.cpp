@@ -18,13 +18,7 @@ Bingo::Bingo()
 
 		nums.push_back(i);
 	}
-	std::random_device rd;
-	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-	
-	for (int i = 0; i < 75; i+=15 )
-	{
-		std::shuffle(this->nums.begin()+i, this->nums.begin() + (i + 15), std::default_random_engine(seed));
-	}
+	random();
 }
 
 int Bingo::generate(int argc, char* argv[])
@@ -44,12 +38,12 @@ int Bingo::generate(int argc, char* argv[])
 		return 1;
 	}
 	
-	int count=0;
-	int vec_pos=1;
 	std::string line;
 	for ( size_t i = 1; i <= number; ++i){
 		std::ofstream myfile;
-		myfile.open (generate_filename(filename, i, number), std::ios::out);		
+		myfile.open (generate_filename(filename, i, number), std::ios::out);
+		int count=0;
+		int vec_pos=1;		
 		while ( std::getline(svg_file, line) ){
 		
 			size_t pos = line.rfind('$');
@@ -71,6 +65,7 @@ int Bingo::generate(int argc, char* argv[])
 		svg_file.clear();
 		svg_file.seekg(0, std::ios_base::beg);
 		myfile.close();
+		random();
 	}
 	
 	return 0;
@@ -110,6 +105,16 @@ const char* Bingo::generate_filename(std::string source, int filenumber, int num
 	return target.c_str();
 }
 
+void Bingo::random()
+{
+	std::random_device rd;
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	
+	for (int i = 0; i < 75; i+=15 )
+	{
+		std::shuffle(this->nums.begin()+i, this->nums.begin() + (i + 15), std::default_random_engine(seed));
+	}
+}
 int Bingo::simulate(int argc, char* argv[])
 {
 	return 0;
@@ -134,7 +139,6 @@ int main(int argc, char* argv[])
 		if ( strcmp(argv[i], "--version") == 0)
 		{
 			std::cout << "version" << std::endl;
-			std::cout << "" << std::endl;
 			return 0;	
 		}
 	}
