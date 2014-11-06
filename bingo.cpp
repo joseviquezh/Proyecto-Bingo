@@ -74,11 +74,8 @@ int Bingo::generate(int argc, char* argv[])
 
 std::string Bingo::get_number(int count)
 {
-	//char temp[10];
-	//itoa ( nums[count], temp, 10);
 	std::stringstream a;
 	a << nums[count];
-	//std::string number = temp
 	std::string number = a.str();
 	return number;
 }
@@ -88,9 +85,6 @@ const char* Bingo::generate_filename(std::string source, int filenumber, int num
 	std::string target;
 	size_t dot_pos = source.rfind('.');
 	
-	//char num_c[number];
-	//itoa(filenumber, num_c, 10);
-	//std::string string_number = num_c;
 	std::stringstream b;
 	b << filenumber;
 	std::string string_number = b.str();
